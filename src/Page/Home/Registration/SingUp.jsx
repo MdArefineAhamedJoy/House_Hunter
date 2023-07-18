@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
 const RegistrationForm = () => {
+  const [serverError, setServerError] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/users", data);
+      console.log("Registration successful. Token:", response.data);
+    } catch (error) {
+      setServerError(error.message);
+      console.error("Error during registration:", error.response.data);
+    }
+  };
 
   return (
     <form
@@ -16,10 +27,7 @@ const RegistrationForm = () => {
       className="max-w-md mx-auto my-4 p-4 bg-white shadow-md rounded-lg"
     >
       <div className="mb-4">
-        <label
-          htmlFor="fullName"
-          className="block text-gray-700 font-bold mb-2"
-        >
+        <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">
           Full Name:
         </label>
         <input
@@ -34,10 +42,7 @@ const RegistrationForm = () => {
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="phoneNumber"
-          className="block text-gray-700 font-bold mb-2"
-        >
+        <label htmlFor="phoneNumber" className="block text-gray-700 font-bold mb-2">
           Phone Number:
         </label>
         <input
@@ -59,7 +64,7 @@ const RegistrationForm = () => {
           type="email"
           id="email"
           name="email"
-          placeholder="Email "
+          placeholder="Email"
           {...register("email", { required: true })}
           className="w-full px-3 py-2 border border-gray-300 rounded"
         />
@@ -67,10 +72,7 @@ const RegistrationForm = () => {
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="password"
-          className="block text-gray-700 font-bold mb-2"
-        >
+        <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
           Password:
         </label>
         <input
@@ -78,17 +80,25 @@ const RegistrationForm = () => {
           id="password"
           name="password"
           placeholder="Password"
-          {...register("password", { required: true })}
+          {...register("password", {
+            required: "This field is required",
+            minLength: {
+              value: 8,
+              message: "Password should be at least 8 characters long",
+            },
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                "Invalid password: it should contain one uppercase letter, one lowercase letter, one digit, and one special character.",
+            },
+          })}
           className="w-full px-3 py-2 border border-gray-300 rounded"
         />
-        {errors.password && <span>This field is required</span>}
+        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
       </div>
 
       <div className="mb-4">
-        <label
-          htmlFor="selectedRole"
-          className="block text-gray-700 font-bold mb-2"
-        >
+        <label htmlFor="selectedRole" className="block text-gray-700 font-bold mb-2">
           Selected Role:
         </label>
         <div className="relative">
@@ -122,21 +132,10 @@ const RegistrationForm = () => {
       >
         Register
       </button>
+
+      {serverError && <span className="text-red-500 block mt-4">{serverError}</span>}
     </form>
   );
 };
 
 export default RegistrationForm;
-
-// const handleChange = (e) => {
-//   setFormData({
-//     ...formData,
-//     [e.target.name]: e.target.value,
-//   });
-// };
-
-// const handleSubmits = async (e) => {
-//   e.preventDefault();
-
-
-// };
