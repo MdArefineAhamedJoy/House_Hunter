@@ -1,122 +1,142 @@
-import React, { useState } from 'react';
+import React from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
-const SingUp = () => {
-
-    const [fullName, setFullName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [selectedRole, setSelectedRole] = useState('owner');
-    const [error, setError] = useState('');
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (!selectedRole) {
-        setError('Please select a role.');
-        return;
-      }
-      const userInfo = {fullName , phoneNumber , email ,  password , selectedRole }
-
-      fetch(`http://localhost:5000/user/register` , {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(userInfo)
-      })
-    };
-  
+const RegistrationForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
 
   return (
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form className="card-body" onSubmit={handleSubmit}>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Full Name</span>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="max-w-md mx-auto my-4 p-4 bg-white shadow-md rounded-lg"
+    >
+      <div className="mb-4">
+        <label
+          htmlFor="fullName"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Full Name:
         </label>
         <input
           type="text"
-          placeholder="Name"
-          className="input input-bordered"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          id="fullName"
+          name="fullName"
+          placeholder="Full Name"
+          {...register("fullName", { required: true })}
+          className="w-full px-3 py-2 border border-gray-300 rounded"
         />
+        {errors.fullName && <span>This field is required</span>}
       </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Phone Number</span>
+
+      <div className="mb-4">
+        <label
+          htmlFor="phoneNumber"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Phone Number:
         </label>
         <input
           type="text"
-          placeholder="+880"
-          className="input input-bordered"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          id="phoneNumber"
+          name="phoneNumber"
+          placeholder="Phone Number"
+          {...register("phoneNumber", { required: true })}
+          className="w-full px-3 py-2 border border-gray-300 rounded"
         />
+        {errors.phoneNumber && <span>This field is required</span>}
       </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Email</span>
+
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+          Email:
         </label>
         <input
-          type="text"
-          placeholder="email"
-          className="input input-bordered"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email "
+          {...register("email", { required: true })}
+          className="w-full px-3 py-2 border border-gray-300 rounded"
         />
+        {errors.email && <span>This field is required</span>}
       </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Password</span>
+
+      <div className="mb-4">
+        <label
+          htmlFor="password"
+          className="block text-gray-700 font-bold mb-2"
+        >
+          Password:
         </label>
         <input
           type="password"
-          placeholder="password"
-          className="input input-bordered"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          id="password"
+          name="password"
+          placeholder="Password"
+          {...register("password", { required: true })}
+          className="w-full px-3 py-2 border border-gray-300 rounded"
         />
+        {errors.password && <span>This field is required</span>}
       </div>
-      <div>
-        <label className="label">
-          <span className="label-text">Select Role</span>
-        </label>
-        <select
-          className="block w-full px-4 py-2 border rounded bg-white text-gray-800"
-          value={selectedRole}
-          onChange={(e) => {
-            setSelectedRole(e.target.value);
-            setError('');
-          }}
+
+      <div className="mb-4">
+        <label
+          htmlFor="selectedRole"
+          className="block text-gray-700 font-bold mb-2"
         >
-          <option value="owner">owner</option>
-          <option value="renter">renter</option>
-        </select>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </div>
-      <div className="form-control mt-6">
-        <button type="submit" className="btn btn-primary">
-          Login
-        </button>
-      </div>
-    </form>
-            </div>
+          Selected Role:
+        </label>
+        <div className="relative">
+          <select
+            id="selectedRole"
+            name="selectedRole"
+            {...register("selectedRole", { required: true })}
+            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          >
+            <option value="owner">Owner</option>
+            <option value="renter">Renter</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg
+              className="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 12l-6-6h12z" />
+            </svg>
           </div>
         </div>
+        {errors.selectedRole && (
+          <span className="text-red-500">This field is required</span>
+        )}
+      </div>
 
-
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+      >
+        Register
+      </button>
+    </form>
   );
 };
 
-export default SingUp;
+export default RegistrationForm;
+
+// const handleChange = (e) => {
+//   setFormData({
+//     ...formData,
+//     [e.target.name]: e.target.value,
+//   });
+// };
+
+// const handleSubmits = async (e) => {
+//   e.preventDefault();
+
+
+// };

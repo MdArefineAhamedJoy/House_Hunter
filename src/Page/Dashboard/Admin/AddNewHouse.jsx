@@ -5,34 +5,42 @@ const AddNewHouse = () => {
   const inputValue = [
     {
       name: "email",
+      title: "Email",
       id: 1,
     },
     {
       name: "address",
+      title: "Address",
       id: 2,
     },
     {
       name: "city",
+      title: "City",
       id: 3,
     },
     {
       name: "bathroom",
+      title: "Bathroom",
       id: 4,
     },
     {
       name: "bedroom",
+      title: "Bedroom",
       id: 5,
     },
     {
-      name: "rent per month ",
+      name: "rent",
+      title: "Rent Per Month",
       id: 6,
     },
     {
       name: "availability",
+      title: "Available Room",
       id: 7,
     },
     {
-      name: " room size,",
+      name: "roomSize",
+      title: "Room Size",
       id: 8,
     },
   ];
@@ -43,15 +51,50 @@ const AddNewHouse = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async ({
+    email,
+    address,
+    city,
+    bathroom,
+    bedroom,
+    rent,
+    availability,
+    roomSize,
+  }) => {
+    const data = {
+      email,
+      address,
+      city,
+      bathroom,
+      bedroom,
+      rent,
+      availability,
+      roomSize,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/house", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className="w-full p-5 h-full ">
       <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-        {inputValue.map(({ name, id }) => (
+        {inputValue.map(({ name, id, title }) => (
           <div key={id} className="form-control">
             <label className="label">
-              <span className="label-text">{name}</span>
+              <span className="label-text">{title}</span>
             </label>
             <input
               type="text"
