@@ -1,6 +1,14 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import axios from "axios";
 const HouseList = () => {
+  const email = "mdarefine05@gmail.com";
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/all/house/${email}`)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
+
   return (
     <div className="w-full">
       <div className="overflow-x-auto w-full">

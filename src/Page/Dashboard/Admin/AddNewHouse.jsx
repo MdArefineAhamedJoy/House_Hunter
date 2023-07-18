@@ -19,6 +19,11 @@ const AddNewHouse = () => {
       id: 3,
     },
     {
+      name: "picture",
+      title: "Picture",
+      id: 9,
+    },
+    {
       name: "bathroom",
       title: "Bathroom",
       id: 4,
@@ -42,6 +47,11 @@ const AddNewHouse = () => {
       name: "roomSize",
       title: "Room Size",
       id: 8,
+    },
+    {
+      name: "description",
+      title: "Description",
+      id: 10,
     },
   ];
 
