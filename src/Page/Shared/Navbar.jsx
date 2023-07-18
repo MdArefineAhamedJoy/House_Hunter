@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
-  let userLocation = location.pathname === "/dashboard";
+  let userLocation = location.pathname === "/dashboard" || location.pathname.includes("/dashboard");
 
   const items = (
     <>

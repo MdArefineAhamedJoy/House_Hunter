@@ -51,27 +51,7 @@ const AddNewHouse = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = async ({
-    email,
-    address,
-    city,
-    bathroom,
-    bedroom,
-    rent,
-    availability,
-    roomSize,
-  }) => {
-    const data = {
-      email,
-      address,
-      city,
-      bathroom,
-      bedroom,
-      rent,
-      availability,
-      roomSize,
-    };
-
+  const onSubmit = async (data) => {
     try {
       const response = await fetch("http://localhost:5000/house", {
         method: "POST",
@@ -80,7 +60,6 @@ const AddNewHouse = () => {
         },
         body: JSON.stringify(data),
       });
-
       const responseData = await response.json();
       console.log(responseData);
     } catch (error) {
@@ -90,23 +69,31 @@ const AddNewHouse = () => {
 
   return (
     <div className="w-full p-5 h-full ">
-      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-        {inputValue.map(({ name, id, title }) => (
-          <div key={id} className="form-control">
-            <label className="label">
-              <span className="label-text">{title}</span>
-            </label>
-            <input
-              type="text"
-              placeholder={name}
-              className="input input-bordered"
-              {...register(`${name}`, { required: true })}
-            />
-          </div>
-        ))}
-        <div className="form-control mt-6">
-          <button className="btn btn-primary">Login</button>
+      <form className="w-full " onSubmit={handleSubmit(onSubmit)}>
+        <div className=" grid grid-cols-2 gap-4">
+          {inputValue?.map(({ id, title, name }) => (
+            <>
+              <div key={id} className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  {title} :
+                </label>
+                <input
+                  type="text"
+                  placeholder={title}
+                  {...register(`${name}`, { required: true })}
+                  className="w-full px-3 py-2 border border-gray-300 focus:outline-none rounded"
+                />
+                {errors.name && <span>This field is required</span>}
+              </div>
+            </>
+          ))}
         </div>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Register
+        </button>
       </form>
     </div>
   );

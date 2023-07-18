@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-const RegistrationForm = () => {
+const SingUp = () => {
   const [serverError, setServerError] = useState("");
   const {
     register,
@@ -138,4 +138,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default SingUp;
