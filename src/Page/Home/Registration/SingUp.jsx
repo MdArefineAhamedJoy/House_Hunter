@@ -3,10 +3,12 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../Router/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const SingUp = () => {
   const [serverError, setServerError] = useState("");
   const {checkUserRoll} = useContext(AuthContext)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -28,6 +30,7 @@ const SingUp = () => {
         })
         setServerError("");
         localStorage.setItem('userEmail', data.email);
+        navigate('/')
       }
 
     } catch (error) {
