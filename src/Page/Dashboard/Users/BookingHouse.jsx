@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { AuthContext } from "../../../Router/AuthProvider";
+import React, {  useEffect, useState } from "react";
+import { Link,  useLoaderData, useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const BookingHouse = () => {
-  const { userEmail } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
   const [userInfo, setUserInfo] = useState(null);
   const booking = useLoaderData();
   const {
@@ -28,9 +30,29 @@ const BookingHouse = () => {
       });
   }, [userEmail]);
 
- const handleConfirmOder = () => {
+  const handleConfirmOder = async (data , info) => {
+    console.log("click")
+    // console.log(data , info)
+    const bookingData = {...data , ...info}
+    delete bookingData._id
+    console.log(bookingData)
 
- }
+    try {
+     const response = await axios.post("http://localhost:5000/house/booking", bookingData);
+     if(response.status){
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title:`Booking Successfully` ,
+            showConfirmButton: false,
+            timer: 1500
+          })
+          navigate('/');
+     }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="">
@@ -84,14 +106,17 @@ const BookingHouse = () => {
               Your Phone Number : {userInfo?.phoneNumber}
             </p>
           </div>
-          <button onClick={handleConfirmOder} className="bg-green-500 uppercase my-2 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full">
-          confirmed Oder 
-        </button>
-        <Link to="/">
-        <button className="bg-red-500 uppercase hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full">
-          Back to home 
-        </button>
-        </Link>
+          <button
+            onClick={()=>handleConfirmOder(userInfo,booking )}
+            className="bg-green-500 uppercase my-2 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full"
+          >
+            confirmed Oder
+          </button>
+          <Link to="/">
+            <button className="bg-red-500 uppercase hover:bg-red-600 text-white font-bold py-2 px-4 rounded w-full">
+              Back to home
+            </button>
+          </Link>
         </div>
       </dir>
     </div>
