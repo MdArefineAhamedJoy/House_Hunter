@@ -6,6 +6,7 @@ import SingUp from "../Page/Home/Registration/SingUp";
 import Dashboard from "../LayOut/Dashboard";
 import HouseList from "../Page/Dashboard/Admin/HouseList";
 import AddNewHouse from "../Page/Dashboard/Admin/AddNewHouse";
+import MyBooking from "../Page/Dashboard/Users/MyBooking";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'booking',
-        element: <></>
+        element: <MyBooking></MyBooking>
       }
     ],
   },

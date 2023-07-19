@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../Page/Shared/Navbar";
 import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../Router/AuthProvider";
 
 const Dashboard = () => {
+  const { currentUser } = useContext(AuthContext);
+
+  console.log(currentUser);
+
   return (
     <div>
       <Navbar></Navbar>
@@ -22,13 +27,24 @@ const Dashboard = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
             {/* Sidebar content here */}
-            <li>
-              {" "}
-              <Link to="houseList">House List</Link>{" "}
-            </li>
-            <li>
-              <Link to="addNewHouse">Add New House</Link>
-            </li>
+            {currentUser === "owner" ? (
+              <>
+                <li>
+                  <Link to="houseList">House List</Link>
+                </li>
+                <li>
+                  <Link to="addNewHouse">Add New House</Link>
+                </li>
+              </>
+            ) : currentUser === "renter" ? (
+              <>
+                <li>
+                  <Link to="booking">My Booking </Link>
+                </li>
+              </>
+            ) : (
+              <></>
+            )}
           </ul>
         </div>
       </div>

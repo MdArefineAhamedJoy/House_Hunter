@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../Router/AuthProvider";
 
 const SingUp = () => {
   const [serverError, setServerError] = useState("");
+  const {checkUserRoll} = useContext(AuthContext)
   const {
     register,
     handleSubmit,
@@ -14,9 +17,21 @@ const SingUp = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post("http://localhost:5000/api/users", data);
-      console.log("Registration successful. Token:", response.data);
+      console.log();
+      if(response.data.message){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title:`${response.data.message}` ,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        setServerError("");
+        localStorage.setItem('userEmail', data.email);
+      }
+
     } catch (error) {
-      setServerError(error.message);
+      setServerError(error?.response?.data?.message);
       console.error("Error during registration:", error.response.data);
     }
   };
