@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <BookingHouse></BookingHouse>,
         loader: ({ params }) =>
           fetch(
-            `http://localhost:5000/booking/${params._id}`
+            `https://house-hunter-server-mdarefineahamedjoy.vercel.app/booking/${params._id}`
           ),
       },
       {

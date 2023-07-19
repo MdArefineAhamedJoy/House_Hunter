@@ -4,7 +4,7 @@ const HouseList = () => {
   const [houseList, setHouseList] = useState([]);
   const email = "mdarefine05@gmail.com";
   useEffect(() => {
-    fetch(`http://localhost:5000/all/house/${email}`)
+    fetch(`https://house-hunter-server-mdarefineahamedjoy.vercel.app/all/house/${email}`)
       .then((res) => res.json())
       .then((data) => setHouseList(data));
   }, []);

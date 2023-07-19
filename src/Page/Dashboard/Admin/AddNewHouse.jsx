@@ -64,7 +64,7 @@ const AddNewHouse = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    fetch("http://localhost:5000/house", {
+    fetch("https://house-hunter-server-mdarefineahamedjoy.vercel.app/house", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

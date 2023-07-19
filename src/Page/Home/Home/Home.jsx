@@ -13,7 +13,7 @@ const Home = () => {
   }, [currentPage]);
 
   const fetchHouses = (page) => {
-    fetch(`http://localhost:5000/houses?page=${page}`)
+    fetch(`https://house-hunter-server-mdarefineahamedjoy.vercel.app/houses?page=${page}`)
       .then((res) => res.json())
       .then((data) => {
         setHouses(data.houses);

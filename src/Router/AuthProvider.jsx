@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
       try {
         setLoading(false);
         const response = await axios.get(
-          `http://localhost:5000/users/${userEmail}`
+          `https://house-hunter-server-mdarefineahamedjoy.vercel.app/users/${userEmail}`
         );
         setCurrentUser(response?.data?.selectedRole);
         setLoading(false);

@@ -23,7 +23,7 @@ const BookingHouse = () => {
   } = booking;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${userEmail}`)
+    fetch(`https://house-hunter-server-mdarefineahamedjoy.vercel.app/users/${userEmail}`)
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data);
@@ -38,7 +38,7 @@ const BookingHouse = () => {
     console.log(bookingData)
 
     try {
-     const response = await axios.post("http://localhost:5000/house/booking", bookingData);
+     const response = await axios.post("https://house-hunter-server-mdarefineahamedjoy.vercel.app/house/booking", bookingData);
      if(response.status){
         Swal.fire({
             position: 'top-end',

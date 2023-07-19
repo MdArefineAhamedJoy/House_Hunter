@@ -16,7 +16,7 @@ const SingUp = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/users", data);
+      const response = await axios.post("https://house-hunter-server-mdarefineahamedjoy.vercel.app/api/users", data);
       console.log();
       if(response.data.message){
         Swal.fire({

@@ -5,7 +5,7 @@ const MyBooking = () => {
   const [myBooking, setMyBooking] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/house/booking`)
+    fetch(`https://house-hunter-server-mdarefineahamedjoy.vercel.app/house/booking`)
       .then((res) => res.json())
       .then((data) => {
         setMyBooking(data)

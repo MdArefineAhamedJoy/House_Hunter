@@ -16,7 +16,7 @@ const App = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth",
+        "https://house-hunter-server-mdarefineahamedjoy.vercel.app/api/auth",
         data
       );
 
