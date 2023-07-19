@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const AddNewHouse = () => {
   const inputValue = [
@@ -21,32 +22,32 @@ const AddNewHouse = () => {
     {
       name: "picture",
       title: "Picture",
-      id: 9,
+      id: 4,
     },
     {
       name: "bathroom",
       title: "Bathroom",
-      id: 4,
+      id: 5,
     },
     {
       name: "bedroom",
       title: "Bedroom",
-      id: 5,
+      id: 6,
     },
     {
       name: "rent",
       title: "Rent Per Month",
-      id: 6,
+      id: 7,
     },
     {
       name: "availability",
       title: "Available Room",
-      id: 7,
+      id: 8,
     },
     {
       name: "roomSize",
       title: "Room Size",
-      id: 8,
+      id: 9,
     },
     {
       name: "description",
@@ -59,22 +60,32 @@ const AddNewHouse = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch("http://localhost:5000/house", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const responseData = await response.json();
-      console.log(responseData);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    fetch("http://localhost:5000/house", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data =>{
+      console.log(data.acknowledged);
+      if (data.acknowledged) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Add House Info Successfully`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        reset();
+      }
+    })
+
   };
 
   return (
@@ -82,20 +93,18 @@ const AddNewHouse = () => {
       <form className="w-full " onSubmit={handleSubmit(onSubmit)}>
         <div className=" grid grid-cols-2 gap-4">
           {inputValue?.map(({ id, title, name }) => (
-            <>
-              <div key={id} className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2">
-                  {title} :
-                </label>
-                <input
-                  type="text"
-                  placeholder={title}
-                  {...register(`${name}`, { required: true })}
-                  className="w-full px-3 py-2 border border-gray-300 focus:outline-none rounded"
-                />
-                {errors.name && <span>This field is required</span>}
-              </div>
-            </>
+            <div key={id} className="mb-4">
+              <label className="block text-gray-700 font-bold mb-2">
+                {title} :
+              </label>
+              <input
+                type="text"
+                placeholder={title}
+                {...register(`${name}`, { required: true })}
+                className="w-full px-3 py-2 border border-gray-300 focus:outline-none rounded"
+              />
+              {errors.name && <span>This field is required</span>}
+            </div>
           ))}
         </div>
         <button

@@ -22,15 +22,29 @@ const Home = () => {
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-3 gap-4">
         {houses.map((house) => (
-          <div key={house.id} className="border rounded p-4">
-            {/* <img src={house.image} alt={`House ${house.id}`} className="w-full h-40 object-cover mb-2" /> */}
-            <p className="font-semibold">Address: {house.address}</p>
-            <p>City: {house.city}</p>
+          <div key={house?._id} className="card  bg-base-100 shadow-xl">
+            <figure className="w-full h-72">
+              <img className="h-full" src={house?.picture} alt="Shoes" />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">City : {house?.city}</h2>
+              <p>Address : {house?.address}</p>
+              <div className="flex justify-between">
+                <p>Size : {house?.roomSize} square feet</p>
+                <p>Total Room : {house?.availability}</p>
+              </div>
+              <p>Rent : ${house?.rent} </p>
+              <p>{house?.description.slice(0, 80)}</p>
+
+              <div className="card-actions justify-end">
+                <button className="btn btn-primary">Book Now</button>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="my-4">
+      <div className="my-4 flex justify-end">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
