@@ -61,7 +61,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{items}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <input className="bg-transparent focus:outline-none border-2 px-2 rounded-md font-semibold  border-gray-500 text-black" type="text" placeholder="search" />
         </div>
       </div>
     </div>

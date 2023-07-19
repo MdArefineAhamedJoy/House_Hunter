@@ -5,9 +5,6 @@ import { AuthContext } from "../Router/AuthProvider";
 
 const Dashboard = () => {
   const { currentUser } = useContext(AuthContext);
-
-  console.log(currentUser);
-
   return (
     <div>
       <Navbar></Navbar>

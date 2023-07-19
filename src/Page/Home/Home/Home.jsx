@@ -13,7 +13,9 @@ const Home = () => {
   }, [currentPage]);
 
   const fetchHouses = (page) => {
-    fetch(`https://house-hunter-server-mdarefineahamedjoy.vercel.app/houses?page=${page}`)
+    fetch(
+      `https://house-hunter-server-mdarefineahamedjoy.vercel.app/houses?page=${page}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setHouses(data.houses);
@@ -56,7 +58,9 @@ const Home = () => {
 
               <Link onClick={handelMessage} to={`/booking/${house._id}`}>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary">Book Now</button>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-1">
+                    Book Now
+                  </button>
                 </div>
               </Link>
             </div>
@@ -64,7 +68,7 @@ const Home = () => {
         ))}
       </div>
 
-      <div className="my-4 flex justify-end">
+      <div className="my-4 flex items-center justify-end gap-4">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
@@ -72,9 +76,10 @@ const Home = () => {
         >
           Previous
         </button>
-        <span className="mr-2">
-          Page {currentPage} of {totalPages}
-        </span>
+        <div className="mr-2 font-bold">
+          <span className=" uppercase"> Page</span> {currentPage}{" "}
+          <span className=" uppercase"> of </span> {totalPages}
+        </div>
         <button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
