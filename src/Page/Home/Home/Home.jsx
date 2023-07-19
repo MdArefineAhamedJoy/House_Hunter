@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../Router/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [houses, setHouses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const { currentUser } = useContext(AuthContext);
+  console.log(houses);
   useEffect(() => {
     fetchHouses(currentPage);
   }, [currentPage]);
@@ -16,6 +19,19 @@ const Home = () => {
         setHouses(data.houses);
         setTotalPages(data.totalPages);
       });
+  };
+
+  const handelMessage = (users) => {
+    if (currentUser) {
+      return <Link to={`category/${data._id}`}></Link>;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Place Login Fast !",
+      });
+      return <Link to="/login"></Link>;
+    }
   };
 
   return (
@@ -38,9 +54,11 @@ const Home = () => {
               <p>Rent : ${house?.rent} </p>
               <p>{house?.description.slice(0, 80)}</p>
 
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Book Now</button>
-              </div>
+              <Link onClick={handelMessage} to={`/booking/${house._id}`}>
+                <div className="card-actions justify-end">
+                  <button className="btn btn-primary">Book Now</button>
+                </div>
+              </Link>
             </div>
           </div>
         ))}

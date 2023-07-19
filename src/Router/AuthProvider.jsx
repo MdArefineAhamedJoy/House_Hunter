@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [loading, setLoading] = useState(true);
 
-  console.log(currentUser)
+
 
   useEffect(() => {
     const checkUserRoll = async (userEmail) => {

@@ -7,6 +7,7 @@ import Dashboard from "../LayOut/Dashboard";
 import HouseList from "../Page/Dashboard/Admin/HouseList";
 import AddNewHouse from "../Page/Dashboard/Admin/AddNewHouse";
 import MyBooking from "../Page/Dashboard/Users/MyBooking";
+import BookingHouse from "../Page/Dashboard/Users/BookingHouse";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/booking/:_id",
+        element: <BookingHouse></BookingHouse>,
+        loader: ({ params }) =>
+          fetch(
+            `http://localhost:5000/booking/${params._id}`
+          ),
       },
       {
         path: "login",
@@ -40,9 +49,9 @@ const router = createBrowserRouter([
         element: <AddNewHouse></AddNewHouse>,
       },
       {
-        path: 'booking',
-        element: <MyBooking></MyBooking>
-      }
+        path: "booking",
+        element: <MyBooking></MyBooking>,
+      },
     ],
   },
 ]);
