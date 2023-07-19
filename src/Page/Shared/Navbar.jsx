@@ -3,22 +3,24 @@ import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
-  let userLocation = location.pathname === "/dashboard" || location.pathname.includes("/dashboard");
+  let userLocation =
+    location.pathname === "/dashboard" ||
+    location.pathname.includes("/dashboard");
 
   const items = (
     <>
-      <li>
-        <Link to="/login"> Login </Link>
-      </li>
-      <li>
-        <Link to="/singUp">Registration </Link>
-      </li>
       <li>
         {userLocation ? (
           <Link to="/"> Home </Link>
         ) : (
           <Link to="/dashboard"> Dashboard </Link>
         )}
+      </li>
+      <li>
+        <Link to="/login"> Login </Link>
+      </li>
+      <li>
+        <Link to="/singUp">Registration </Link>
       </li>
     </>
   );
@@ -51,7 +53,9 @@ const Navbar = () => {
               {items}
             </ul>
           </div>
-          <a className="btn btn-ghost  text-2xl capitalize font-extrabold">HouseHunter</a>
+          <Link to="/" className="btn btn-ghost  text-2xl capitalize font-extrabold">
+            HouseHunter
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{items}</ul>
