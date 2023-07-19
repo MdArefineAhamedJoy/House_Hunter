@@ -10,16 +10,17 @@ const HouseList = () => {
   }, []);
   return (
     <div className="w-full">
+      <h1 className="uppercase text-xl font-semibold text-center my-10">List of rooms you are going to rent</h1>
       <div className="overflow-x-auto w-full">
         <table className="table">
           <thead>
-            <tr className="text-center">
+            <tr className="text-center bg-gray-500 font-bold text-lg text-sky-100">
               <th>No</th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th>Favorite Color</th>
-              <th>Favorite Color</th>
+              <th>Email</th>
+              <th>Room Size</th>
+              <th>Room Info</th>
+              <th>Rent Per Month </th>
+              <th>Address</th>
             </tr>
           </thead>
           <tbody>
@@ -35,17 +36,29 @@ const HouseList = () => {
                   bathroom,
                   bedroom,
                   availability,
-                  picture,
-                  description,
-                }, index
+                },
+                index
               ) => (
-                <tr  key={_id} className="hover text-center">
+                <tr key={_id} className="hover text-center">
                   <th>{index + 1}</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                  <td>Blue</td>
-                  <td>Blue</td>
+                  <td>{email}</td>
+                  <td>{roomSize} square feet</td>
+                  <td>
+                    <div>
+                      <p>Bathroom {bathroom}</p>
+                      <p>Bedroom  {bedroom}</p>
+                      <p>availability  {availability}</p>
+                    </div>
+                  </td>
+                  <td>
+                  $ { rent}
+                  </td>
+                  <td>
+                    <div>
+                      <p> {address}</p>
+                      <p>{city}</p>
+                    </div>
+                  </td>
                 </tr>
               )
             )}

@@ -29,9 +29,11 @@ const Home = () => {
             <div className="card-body">
               <h2 className="card-title">City : {house?.city}</h2>
               <p>Address : {house?.address}</p>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-2 gap-x-4 ">
                 <p>Size : {house?.roomSize} square feet</p>
                 <p>Total Room : {house?.availability}</p>
+                <p>Bathroom : {house?.bathroom}</p>
+                <p>Bedroom : {house?.bedroom}</p>
               </div>
               <p>Rent : ${house?.rent} </p>
               <p>{house?.description.slice(0, 80)}</p>
